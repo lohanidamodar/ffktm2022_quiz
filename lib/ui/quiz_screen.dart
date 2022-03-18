@@ -106,33 +106,41 @@ class _QuizScreenState extends State<QuizScreen> {
                   icon: const Icon(Icons.close_rounded),
                 ),
                 questions != null
-                    ? CircularCountDownTimer(
-                        duration: 20 * 10,
-                        initialDuration: 0,
-                        controller: CountDownController(),
-                        width: 50,
-                        height: 50,
-                        ringColor: Colors.grey[300]!,
-                        ringGradient: null,
-                        fillColor: const Color(0xff9483e1),
-                        backgroundColor: const Color(0xff001e3d),
-                        backgroundGradient: null,
-                        strokeWidth: 2.0,
-                        strokeCap: StrokeCap.round,
-                        textStyle: const TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.white,
-                            fontFamily: 'Lato',
-                            fontWeight: FontWeight.bold),
-                        textFormat: CountdownTextFormat.MM_SS,
-                        isReverse: true,
-                        isReverseAnimation: false,
-                        isTimerTextShown: true,
-                        autoStart: true,
-                        onComplete: () {
-                          widget.back.call();
-                        },
-                      )
+                    ? Builder(builder: (context) {
+                        return CircularCountDownTimer(
+                          duration: 10 * 10,
+                          initialDuration: 0,
+                          controller: CountDownController(),
+                          width: 50,
+                          height: 50,
+                          ringColor: Colors.grey[300]!,
+                          ringGradient: null,
+                          fillColor: const Color(0xff9483e1),
+                          backgroundColor: const Color(0xff001e3d),
+                          backgroundGradient: null,
+                          strokeWidth: 2.0,
+                          strokeCap: StrokeCap.round,
+                          textStyle: const TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.white,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.bold),
+                          textFormat: CountdownTextFormat.MM_SS,
+                          isReverse: true,
+                          isReverseAnimation: false,
+                          isTimerTextShown: true,
+                          autoStart: true,
+                          onComplete: () {
+                            Scaffold.of(context).showBottomSheet(
+                              (context) => AnimatedBottomSheet(
+                                child: const RegisterWidget(),
+                                title: 'Register',
+                                buildContext: context,
+                              ),
+                            );
+                          },
+                        );
+                      })
                     : const SizedBox(),
                 StreamBuilder<int>(
                     stream: QuizCubit().stream,

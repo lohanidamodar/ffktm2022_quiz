@@ -10,8 +10,8 @@ void main(List<String> args) async {
       "answer": "All the Above"
     },
     {
-      "question": "Which company develop flutter?",
-      "options": ["Wrap", "Opacity", "FittedBox", "TransformBox"],
+      "question": "Which company developed flutter?",
+      "options": ["Facebook", "Khalti", "Google", "Jio"],
       "answer": "TransformBox"
     },
     {
@@ -20,7 +20,7 @@ void main(List<String> args) async {
       "answer": "2.10.2"
     },
     {
-      "question": "Which is not a life cycle of StatefulWidget?",
+      "question": "Which is not a life cycle method of StatefulWidget?",
       "options": ["build()", "didUpdateWidget()", "useState()", "deactivate()"],
       "answer": "useState()"
     },
