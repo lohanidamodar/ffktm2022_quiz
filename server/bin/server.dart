@@ -12,20 +12,21 @@ void main(List<String> args) async {
     {
       "question": "Which company developed flutter?",
       "options": ["Facebook", "Khalti", "Google", "Jio"],
-      "answer": "TransformBox"
+      "answer": "Google"
     },
     {
-      "question": "Which one is the latest stable version used in Windows?",
+      "question":
+          "Stable support for windows was announced in flutter version?",
       "options": ["2.10.0", "2.10.1", "2.10.2", "2.10.2"],
-      "answer": "2.10.2"
+      "answer": "2.10.0"
     },
     {
-      "question": "Which is not a life cycle method of StatefulWidget?",
+      "question": "Which is not a life cycle of StatefulWidget?",
       "options": ["build()", "didUpdateWidget()", "useState()", "deactivate()"],
       "answer": "useState()"
     },
     {
-      "question": "Which programming language is used in Flutter?",
+      "question": "Primary programming language used to build Flutter apps is?",
       "options": ["Javascript", "Dart", "C++", "Go"],
       "answer": "Dart"
     },
@@ -35,7 +36,7 @@ void main(List<String> args) async {
       "answer": "May 2017"
     },
     {
-      "question": "The Dart language can be compiled",
+      "question": "The Dart language can be compiled using _______ compiler.",
       "options": ["AOT", "JIT", "Both AOT and JIT", "None of the above"],
       "answer": "Both AOT and JIT"
     },
@@ -66,7 +67,7 @@ void main(List<String> args) async {
       "answer": "build()"
     },
     {
-      "question": "Which command is used for the Switching Flutter channel?",
+      "question": "Which command is used for the switching Flutter channel?",
       "options": [
         "Git switch <channel-name>",
         "flutter switch <channel-name>",
@@ -80,6 +81,16 @@ void main(List<String> args) async {
           "Which web renderer flutter uses by default to render web content on mobile?",
       "options": ["Html", "Canvaskit", "None", "Both"],
       "answer": "Html"
+    },
+    {
+      "question": "Flutter’s web support became stable on?",
+      "options": ["March 2021", "March 2020", "December 2019", "May 2021"],
+      "answer": "March 2021"
+    },
+    {
+      "question": "First public commit to flutter repository was made on?",
+      "options": ["February 2015", "May 2020", "December 2014", "October 2014"],
+      "answer": "October 2014"
     },
   ];
 

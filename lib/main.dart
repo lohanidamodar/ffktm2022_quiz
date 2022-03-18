@@ -1,11 +1,13 @@
 import 'package:animations/animations.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/services/appwrite.dart';
 import 'package:quiz/ui/button.dart';
 import 'package:quiz/ui/quiz_screen.dart';
 import 'package:quiz/ui/submitted_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -169,7 +171,39 @@ class _MyHomePageState extends State<MyHomePage> {
                     back: action,
                   );
                 },
-              )
+              ),
+              RichText(
+                text: TextSpan(
+                    children: [
+                      const TextSpan(text: 'Built with '),
+                      TextSpan(
+                        text: 'Flutter',
+                        style: const TextStyle(
+                          color: Colors.redAccent,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            launch('https://flutter.dev/');
+                          },
+                      ),
+                      const TextSpan(text: ' & '),
+                      TextSpan(
+                        text: 'Appwrite',
+                        style: const TextStyle(
+                          color: Colors.redAccent,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            launch('https://appwrite.io/');
+                          },
+                      ),
+                    ],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Lato',
+                      fontSize: 16,
+                    )),
+              ),
             ],
           ),
         ),

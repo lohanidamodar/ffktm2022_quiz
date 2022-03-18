@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:rive/rive.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SubmittedScreen extends StatelessWidget {
   const SubmittedScreen({Key? key}) : super(key: key);
@@ -38,8 +40,33 @@ class SubmittedScreen extends StatelessWidget {
               fontWeight: FontWeight.w100,
               fontSize: 20,
             ),
+            textAlign: TextAlign.center,
           ),
-          const SizedBox(),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  launch('https://www.facebook.com/groups/2276413572590610');
+                },
+                icon: const Icon(FontAwesome5Brands.facebook),
+                color: Colors.white60,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                onPressed: () {
+                  launch('https://www.meetup.com/flutter-kathmandu/');
+                },
+                icon: const Icon(FontAwesome5Brands.meetup),
+                color: Colors.white60,
+              )
+            ],
+          ),
         ],
       ),
     );
