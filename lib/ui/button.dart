@@ -37,6 +37,7 @@ class AppButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
+              fontFamily: 'Lato',
               fontSize: 18,
               color: isSecondary ? const Color(0xff9483e1) : Colors.white,
               fontWeight: FontWeight.bold,

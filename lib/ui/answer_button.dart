@@ -43,7 +43,7 @@ class _AnswerButtonState extends State<AnswerButton> {
           boxShadow: kElevationToShadow[6],
           border: Border.all(
             color: isSelected ? const Color(0xff9483e1) : Colors.transparent,
-            width: 5,
+            width: 2,
           ),
         ),
         child: Center(
@@ -51,6 +51,7 @@ class _AnswerButtonState extends State<AnswerButton> {
             widget.value,
             style: TextStyle(
               fontSize: 18,
+              fontFamily: 'Lato',
               color: isSelected ? const Color(0xff9483e1) : Colors.white,
               fontWeight: FontWeight.bold,
             ),

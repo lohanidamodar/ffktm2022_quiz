@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:appwrite/models.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -25,7 +26,9 @@ class _QuizScreenState extends State<QuizScreen> {
   final RiveAnimationController _danceAnimation = SimpleAnimation('slowDance');
   final RiveAnimationController _lookUpAnimation = OneShotAnimation('lookUp');
 
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(
+    keepPage: false,
+  );
 
   DocumentList? questions;
   bool isFetching = true;
@@ -69,9 +72,18 @@ class _QuizScreenState extends State<QuizScreen> {
                         actionsAlignment: MainAxisAlignment.spaceBetween,
                         actionsPadding: const EdgeInsets.all(5),
                         actionsOverflowButtonSpacing: 10,
-                        title: const Text('Are you sure?'),
-                        content:
-                            const Text('Closing now will clear your progress.'),
+                        title: const Text(
+                          'Are you sure?',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                          ),
+                        ),
+                        content: const Text(
+                          'Closing now will clear your progress.',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                          ),
+                        ),
                         actions: [
                           AppButton(
                             isSecondary: true,
@@ -105,11 +117,12 @@ class _QuizScreenState extends State<QuizScreen> {
                         fillColor: const Color(0xff9483e1),
                         backgroundColor: const Color(0xff001e3d),
                         backgroundGradient: null,
-                        strokeWidth: 3.0,
+                        strokeWidth: 2.0,
                         strokeCap: StrokeCap.round,
                         textStyle: const TextStyle(
                             fontSize: 14.0,
                             color: Colors.white,
+                            fontFamily: 'Lato',
                             fontWeight: FontWeight.bold),
                         textFormat: CountdownTextFormat.MM_SS,
                         isReverse: true,
@@ -125,9 +138,10 @@ class _QuizScreenState extends State<QuizScreen> {
                     stream: QuizCubit().stream,
                     builder: (context, snapshot) {
                       return Text(
-                        '${snapshot.data ?? 0}/10',
+                        '${snapshot.data ?? 0} / 10',
                         style: const TextStyle(
                           fontSize: 18.0,
+                          fontFamily: 'Lato',
                           color: Colors.white,
                         ),
                       );
@@ -137,6 +151,8 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
           questions == null
               ? Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       width: (MediaQuery.of(context).size.width / 5) < 250
@@ -166,7 +182,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         style: const TextStyle(
                           fontSize: 40.0,
                           color: Colors.white,
-                          fontWeight: FontWeight.w100,
+                          fontWeight: FontWeight.w300,
                           fontFamily: 'Lato',
                         ),
                         textAlign: TextAlign.center,
@@ -190,7 +206,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     controller: _pageController,
                     itemCount: 10,
                     pageSnapping: true,
-                    reverse: true,
+                    reverse: false,
                     allowImplicitScrolling: true,
                     onPageChanged: (index) {
                       QuizCubit().updateQuestionNumber(index + 1);
@@ -203,16 +219,20 @@ class _QuizScreenState extends State<QuizScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 30),
-                            child: Text(
-                              questions!.documents[index].data['question'],
-                              style: TextStyle(
-                                color: const Color(0xff9483e1),
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 30 >= 18
-                                        ? MediaQuery.of(context).size.width / 30
-                                        : 18,
+                            child: FadeIn(
+                              child: Text(
+                                questions!.documents[index].data['question'],
+                                style: TextStyle(
+                                  color: const Color(0xff9483e1),
+                                  fontFamily: 'Lato',
+                                  fontSize: MediaQuery.of(context).size.width /
+                                              30 >=
+                                          18
+                                      ? MediaQuery.of(context).size.width / 30
+                                      : 18,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                           Expanded(
@@ -230,27 +250,30 @@ class _QuizScreenState extends State<QuizScreen> {
                                 ...questions!.documents[index].data['options']
                                     .map(
                                   (e) {
-                                    return AnswerButton(
-                                      value: '$e',
-                                      onSelected: () async {
-                                        QuizCubit().checkAnswer(
-                                            questions!.documents[index], e);
-                                        if (QuizCubit().currentPage >= 10) {
-                                          Scaffold.of(context).showBottomSheet(
-                                            (context) => AnimatedBottomSheet(
-                                              child: const RegisterWidget(),
-                                              title: 'Register',
-                                              buildContext: context,
-                                            ),
-                                          );
-                                        } else {
-                                          _pageController.nextPage(
-                                            duration: const Duration(
-                                                milliseconds: 500),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        }
-                                      },
+                                    return FadeInUp(
+                                      child: AnswerButton(
+                                        value: '$e',
+                                        onSelected: () async {
+                                          QuizCubit().checkAnswer(
+                                              questions!.documents[index], e);
+                                          if (QuizCubit().currentPage >= 10) {
+                                            Scaffold.of(context)
+                                                .showBottomSheet(
+                                              (context) => AnimatedBottomSheet(
+                                                child: const RegisterWidget(),
+                                                title: 'Register',
+                                                buildContext: context,
+                                              ),
+                                            );
+                                          } else {
+                                            _pageController.nextPage(
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          }
+                                        },
+                                      ),
                                     );
                                   },
                                 ).toList(),

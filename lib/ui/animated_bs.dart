@@ -59,6 +59,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet> {
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     icon: const CircleAvatar(
                       radius: 10,
