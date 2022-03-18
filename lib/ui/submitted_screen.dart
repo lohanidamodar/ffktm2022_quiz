@@ -28,6 +28,7 @@ class SubmittedScreen extends StatelessWidget {
               fontSize: 50.0,
               color: Colors.green,
             ),
+            textAlign: TextAlign.center,
           ),
           const Text(
             'If selected, You will receive a call from us shortly.',

@@ -42,11 +42,16 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 child: Row(
                   children: const [
                     Icon(Icons.info),
-                    Text(
-                      '  Please enter your phone number to participate in giveaway.',
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w300,
+                    Expanded(
+                      child: SizedBox(
+                        child: Text(
+                          '  Please enter your phone number to participate in giveaway.',
+                          softWrap: true,
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
                       ),
                     ),
                   ],

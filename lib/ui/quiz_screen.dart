@@ -31,6 +31,7 @@ class _QuizScreenState extends State<QuizScreen> {
   );
 
   DocumentList? questions;
+  List<Document> documents = [];
   bool isFetching = true;
   int score = 0;
   List answers = [];
@@ -46,6 +47,8 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void fetchQuestions() async {
     questions = await AppwriteService().fetchQuizes();
+    documents.addAll(questions!.documents);
+    documents.shuffle();
     setState(() {
       isFetching = false;
     });
@@ -219,7 +222,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     onPageChanged: (index) {
                       QuizCubit().updateQuestionNumber(index + 1);
                     },
-                    physics: const BouncingScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -229,7 +232,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                 horizontal: 20, vertical: 30),
                             child: FadeIn(
                               child: Text(
-                                questions!.documents[index].data['question'],
+                                documents
+                                    .sublist(0, 10)[index]
+                                    .data['question'],
                                 style: TextStyle(
                                   color: const Color(0xff9483e1),
                                   fontFamily: 'Lato',
@@ -255,7 +260,9 @@ class _QuizScreenState extends State<QuizScreen> {
                               mainAxisSpacing: 20,
                               shrinkWrap: true,
                               children: [
-                                ...questions!.documents[index].data['options']
+                                ...documents
+                                    .sublist(0, 10)[index]
+                                    .data['options']
                                     .map(
                                   (e) {
                                     return FadeInUp(
@@ -263,7 +270,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                         value: '$e',
                                         onSelected: () async {
                                           QuizCubit().checkAnswer(
-                                              questions!.documents[index], e);
+                                              documents.sublist(0, 10)[index],
+                                              e);
                                           if (QuizCubit().currentPage >= 10) {
                                             Scaffold.of(context)
                                                 .showBottomSheet(

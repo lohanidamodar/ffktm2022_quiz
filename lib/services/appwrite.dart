@@ -21,7 +21,6 @@ class AppwriteService {
   Future<DocumentList> fetchQuizes() async {
     DocumentList questions = await database.listDocuments(
       collectionId: 'questions',
-      limit: 10,
     );
     return questions;
   }

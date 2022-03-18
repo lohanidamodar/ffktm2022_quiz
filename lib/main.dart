@@ -111,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.white70,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
