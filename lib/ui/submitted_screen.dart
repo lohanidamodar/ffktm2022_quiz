@@ -4,7 +4,9 @@ import 'package:rive/rive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SubmittedScreen extends StatelessWidget {
-  const SubmittedScreen({Key? key}) : super(key: key);
+  const SubmittedScreen({Key? key, required this.score}) : super(key: key);
+
+  final int score;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class SubmittedScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
           ),
           Text(
-            'Quiz Submitted'.toUpperCase(),
+            'your Score : $score'.toUpperCase(),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 50.0,
@@ -33,7 +35,7 @@ class SubmittedScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Text(
-            'If selected, You will receive a call from us shortly.',
+            'If selected, You will receive a call or an email from us shortly.',
             style: TextStyle(
               color: Colors.white70,
               fontFamily: 'Lato',
