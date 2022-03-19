@@ -34,10 +34,19 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               : MediaQuery.of(context).size.width / 2,
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              shrinkWrap: true,
               children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "${QuizCubit().score}/10",
+                    style: const TextStyle(
+                      fontFamily: 'Lato',
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

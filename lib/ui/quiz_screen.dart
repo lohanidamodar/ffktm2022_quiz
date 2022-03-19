@@ -1,19 +1,14 @@
 import 'dart:async';
-
-import 'package:animate_do/animate_do.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:appwrite/models.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/services/appwrite.dart';
 import 'package:quiz/services/quiz_cubit.dart';
-import 'package:quiz/ui/animated_bs.dart';
-import 'package:quiz/ui/answer_button.dart';
 import 'package:quiz/ui/prompt.dart';
-import 'package:quiz/ui/register_widget.dart';
-import 'package:rive/rive.dart';
+import 'package:quiz/ui/question_loading.widget.dart';
+import 'package:quiz/ui/quiz.widget.dart';
 
 import 'button.dart';
+import 'countdown_timer.widget.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key, required this.back}) : super(key: key);
@@ -23,12 +18,6 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  final RiveAnimationController _danceAnimation = SimpleAnimation('slowDance');
-  final RiveAnimationController _lookUpAnimation = OneShotAnimation('lookUp');
-
-  final PageController _pageController = PageController(
-    keepPage: false,
-  );
 
   DocumentList? questions;
   List<Document> documents = [];
@@ -108,43 +97,8 @@ class _QuizScreenState extends State<QuizScreen> {
                   },
                   icon: const Icon(Icons.close_rounded),
                 ),
-                questions != null
-                    ? Builder(builder: (context) {
-                        return CircularCountDownTimer(
-                          duration: 10 * 10,
-                          initialDuration: 0,
-                          controller: CountDownController(),
-                          width: 50,
-                          height: 50,
-                          ringColor: Colors.grey[300]!,
-                          ringGradient: null,
-                          fillColor: const Color(0xff9483e1),
-                          backgroundColor: const Color(0xff001e3d),
-                          backgroundGradient: null,
-                          strokeWidth: 2.0,
-                          strokeCap: StrokeCap.round,
-                          textStyle: const TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.white,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.bold),
-                          textFormat: CountdownTextFormat.MM_SS,
-                          isReverse: true,
-                          isReverseAnimation: false,
-                          isTimerTextShown: true,
-                          autoStart: true,
-                          onComplete: () {
-                            Scaffold.of(context).showBottomSheet(
-                              (context) => AnimatedBottomSheet(
-                                child: const RegisterWidget(),
-                                title: 'Register',
-                                buildContext: context,
-                              ),
-                            );
-                          },
-                        );
-                      })
-                    : const SizedBox(),
+                if (questions != null)
+                  const CountdownTimer(),
                 StreamBuilder<int>(
                     stream: QuizCubit().stream,
                     builder: (context, snapshot) {
@@ -161,146 +115,8 @@ class _QuizScreenState extends State<QuizScreen> {
             ),
           ),
           questions == null
-              ? Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: (MediaQuery.of(context).size.width / 5) < 250
-                          ? 250
-                          : (MediaQuery.of(context).size.width / 5),
-                      height: 300,
-                      child: RiveAnimation.asset(
-                        'assets/animations/dash.riv',
-                        fit: BoxFit.contain,
-                        controllers: [
-                          _danceAnimation,
-                          _lookUpAnimation,
-                        ],
-                        onInit: (artboard) {
-                          Future.delayed(const Duration(seconds: 1), () {
-                            _lookUpAnimation.isActive = true;
-                            _danceAnimation.isActive = true;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SizedBox(
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 40.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300,
-                          fontFamily: 'Lato',
-                        ),
-                        textAlign: TextAlign.center,
-                        child: AnimatedTextKit(
-                          pause: const Duration(milliseconds: 700),
-                          isRepeatingAnimation: false,
-                          animatedTexts: [
-                            FadeAnimatedText('Hi!'),
-                            FadeAnimatedText('I am Dash'),
-                            FadeAnimatedText('I am preparing questions for you',
-                                textAlign: TextAlign.center),
-                            FadeAnimatedText('Almost Done'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : Expanded(
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: 10,
-                    pageSnapping: true,
-                    reverse: false,
-                    allowImplicitScrolling: true,
-                    onPageChanged: (index) {
-                      QuizCubit().updateQuestionNumber(index + 1);
-                    },
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 30),
-                            child: FadeIn(
-                              child: Text(
-                                documents
-                                    .sublist(0, 10)[index]
-                                    .data['question'],
-                                style: TextStyle(
-                                  color: const Color(0xff9483e1),
-                                  fontFamily: 'Lato',
-                                  fontSize: MediaQuery.of(context).size.width /
-                                              30 >=
-                                          18
-                                      ? MediaQuery.of(context).size.width / 30
-                                      : 18,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GridView.count(
-                              crossAxisCount: 2,
-                              childAspectRatio:
-                                  MediaQuery.of(context).size.width < 500
-                                      ? 2
-                                      : 5,
-                              padding: const EdgeInsets.all(20),
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
-                              shrinkWrap: true,
-                              children: [
-                                ...documents
-                                    .sublist(0, 10)[index]
-                                    .data['options']
-                                    .map(
-                                  (e) {
-                                    return FadeInUp(
-                                      child: AnswerButton(
-                                        value: '$e',
-                                        onSelected: () async {
-                                          QuizCubit().checkAnswer(
-                                              documents.sublist(0, 10)[index],
-                                              e);
-                                          if (QuizCubit().currentPage >= 10) {
-                                            Scaffold.of(context)
-                                                .showBottomSheet(
-                                              (context) => AnimatedBottomSheet(
-                                                child: const RegisterWidget(),
-                                                title: 'Register',
-                                                buildContext: context,
-                                              ),
-                                            );
-                                          } else {
-                                            _pageController.nextPage(
-                                              duration: const Duration(
-                                                  milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ).toList(),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                )
+              ? QuestionLoadingWidget()
+              : QuizWidget( documents: documents)
         ],
       ),
     );
