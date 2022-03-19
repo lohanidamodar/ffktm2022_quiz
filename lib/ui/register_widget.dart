@@ -15,6 +15,8 @@ class RegisterWidget extends StatefulWidget {
 class _RegisterWidgetState extends State<RegisterWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   bool isSubmitting = false;
 
@@ -61,6 +63,31 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 height: 30,
               ),
               TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  border: InputBorder.none,
+                  suffixIcon: Tooltip(
+                    message: 'Your Full Name',
+                    triggerMode: TooltipTriggerMode.tap,
+                    child: Icon(Icons.info_outline),
+                  ),
+                ),
+              ),
+              TextFormField(
+                controller: _emailController,
+                keyboardType: TextInputType.email,
+                decoration: const InputDecoration(
+                  filled: true,
+                  border: InputBorder.none,
+                  suffixIcon: Tooltip(
+                    message: 'Your Email Address',
+                    triggerMode: TooltipTriggerMode.tap,
+                    child: Icon(Icons.info_outline),
+                  ),
+                ),
+              ),
+              TextFormField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -84,7 +111,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           isSubmitting = true;
                         });
                         try {
-                          await QuizCubit().submitAnswer(_phoneController.text);
+                          await QuizCubit().submitAnswer(_phoneController.text, _emailController.text, _nameController.text);
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) {

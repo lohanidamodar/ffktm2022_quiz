@@ -31,7 +31,7 @@ class QuizCubit {
     _questionController.add(val);
   }
 
-  Future<void> submitAnswer(String? phoneNumber) async {
+  Future<void> submitAnswer(String phoneNumber, String email, String name) async {
     try {
       User sessionId = await AppwriteService().account.get();
       await AppwriteService().database.createDocument(
@@ -42,6 +42,8 @@ class QuizCubit {
           'score': _score,
           'answers': _answers.toString(),
           'phone_number': phoneNumber,
+          'email': email,
+          'name': name,
         },
       );
     } catch (e) {
