@@ -76,7 +76,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               ),
               TextFormField(
                 controller: _emailController,
-                keyboardType: TextInputType.email,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   filled: true,
                   border: InputBorder.none,
