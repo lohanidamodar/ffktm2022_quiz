@@ -35,7 +35,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                child: const Text("Score"),
+                child: Text(
+                  "${QuizCubit().score}/10",
+                  style: const TextStyle(
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
               ),
               Container(
                 padding:
@@ -119,7 +125,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           isSubmitting = true;
                         });
                         try {
-                          await QuizCubit().submitAnswer(_phoneController.text, _emailController.text, _nameController.text);
+                          await QuizCubit().submitAnswer(_phoneController.text,
+                              _emailController.text, _nameController.text);
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder: (context, animation1, animation2) {
