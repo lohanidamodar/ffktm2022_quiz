@@ -18,7 +18,6 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
   DocumentList? questions;
   List<Document> documents = [];
   bool isFetching = true;
@@ -87,6 +86,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           AppButton(
                             onTap: () {
                               Navigator.pop(context);
+                              QuizCubit().setScore = 0;
                               widget.back.call();
                             },
                             label: 'I Understand',
@@ -97,8 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   },
                   icon: const Icon(Icons.close_rounded),
                 ),
-                if (questions != null)
-                  const CountdownTimer(),
+                if (questions != null) const CountdownTimer(),
                 StreamBuilder<int>(
                     stream: QuizCubit().stream,
                     builder: (context, snapshot) {
@@ -116,7 +115,7 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
           questions == null
               ? QuestionLoadingWidget()
-              : QuizWidget( documents: documents)
+              : QuizWidget(documents: documents)
         ],
       ),
     );
