@@ -65,6 +65,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(
+                  hintText: "Full name",
                   filled: true,
                   border: InputBorder.none,
                   suffixIcon: Tooltip(
@@ -74,10 +75,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
+                  hintText: "Email address",
                   filled: true,
                   border: InputBorder.none,
                   suffixIcon: Tooltip(
@@ -87,10 +90,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
+                  hintText: "Phone number",
                   filled: true,
                   border: InputBorder.none,
                   suffixIcon: Tooltip(
