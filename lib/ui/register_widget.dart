@@ -50,7 +50,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     Expanded(
                       child: SizedBox(
                         child: Text(
-                          '  Please enter your phone number to participate in giveaway.',
+                          '  Please enter your details to participate in giveaway.',
                           softWrap: true,
                           style: TextStyle(
                             fontFamily: 'Lato',
