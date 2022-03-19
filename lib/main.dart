@@ -3,6 +3,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:quiz/services/appwrite.dart';
 import 'package:quiz/ui/button.dart';
 import 'package:quiz/ui/quiz_screen.dart';
@@ -54,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       _user = await AppwriteService().account.get();
       try {
-        await AppwriteService()
+        Document score = await AppwriteService()
             .database
             .getDocument(collectionId: 'Scores', documentId: _user.$id);
         Navigator.pushReplacement(
@@ -63,7 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
             pageBuilder: (context, animation1, animation2) {
               return FadeScaleTransition(
                 animation: animation1,
-                child: const SubmittedScreen(),
+                child: SubmittedScreen(
+                  score: score.data['score'],
+                ),
               );
             },
           ),
@@ -101,12 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
-                children: const [
-                  FlutterLogo(
+                children: [
+                  const FlutterLogo(
                     size: 150,
                     style: FlutterLogoStyle.markOnly,
                   ),
-                  Text(
+                  const Text(
                     'Flutter Kathmandu',
                     style: TextStyle(
                       fontSize: 50,
@@ -114,6 +117,29 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          launch(
+                              'https://www.facebook.com/groups/2276413572590610');
+                        },
+                        icon: const Icon(FontAwesome5Brands.facebook),
+                        color: Colors.white60,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launch('https://www.meetup.com/flutter-kathmandu/');
+                        },
+                        icon: const Icon(FontAwesome5Brands.meetup),
+                        color: Colors.white60,
+                      )
+                    ],
                   ),
                 ],
               ),
