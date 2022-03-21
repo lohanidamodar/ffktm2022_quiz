@@ -1,5 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
+import 'package:quiz/main.dart';
+import 'package:quiz/ui/button.dart';
 import 'package:rive/rive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,15 +37,25 @@ class SubmittedScreen extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const Text(
-            'If selected, You will receive a call or an email from us shortly.',
-            style: TextStyle(
-              color: Colors.white70,
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.w100,
-              fontSize: 20,
-            ),
-            textAlign: TextAlign.center,
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: 200,
+            child: AppButton(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) {
+                        return FadeScaleTransition(
+                          animation: animation1,
+                          child: const MyHomePage(),
+                        );
+                      },
+                    ),
+                  );
+                },
+                label: 'Retry'),
           ),
           const SizedBox(
             height: 10,

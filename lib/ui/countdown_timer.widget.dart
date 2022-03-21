@@ -1,8 +1,9 @@
+import 'package:animations/animations.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/ui/register_widget.dart';
+import 'package:quiz/ui/submitted_screen.dart';
 
-import 'animated_bs.dart';
+import '../services/quiz_cubit.dart';
 
 class CountdownTimer extends StatelessWidget {
   const CountdownTimer({
@@ -35,11 +36,16 @@ class CountdownTimer extends StatelessWidget {
       isTimerTextShown: true,
       autoStart: true,
       onComplete: () {
-        Scaffold.of(context).showBottomSheet(
-          (context) => AnimatedBottomSheet(
-            child: const RegisterWidget(),
-            title: 'Register',
-            buildContext: context,
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) {
+              return FadeScaleTransition(
+                animation: animation1,
+                child: SubmittedScreen(
+                  score: QuizCubit().score,
+                ),
+              );
+            },
           ),
         );
       },

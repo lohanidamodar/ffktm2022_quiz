@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:animations/animations.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/ui/register_widget.dart';
+import 'package:quiz/ui/submitted_screen.dart';
 
 import '../services/quiz_cubit.dart';
-import 'animated_bs.dart';
 import 'answer_button.dart';
 
 class QuizWidget extends StatelessWidget {
@@ -69,13 +69,18 @@ class QuizWidget extends StatelessWidget {
                               QuizCubit().checkAnswer(
                                   documents.sublist(0, 10)[index], e);
                               if (QuizCubit().currentPage >= 10) {
-                                Scaffold.of(context).showBottomSheet(
-                                  (context) => AnimatedBottomSheet(
-                                    child: const RegisterWidget(),
-                                    title: 'Register',
-                                    buildContext: context,
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return FadeScaleTransition(
+                                        animation: animation1,
+                                        child: SubmittedScreen(
+                                          score: QuizCubit().score,
+                                        ),
+                                      );
+                                    },
                                   ),
-                                  enableDrag: false,
                                 );
                               } else {
                                 _pageController.nextPage(

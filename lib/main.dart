@@ -43,43 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     AppwriteService();
-    checkSubmissionStatus();
     super.initState();
-  }
-
-  Future<void> checkSubmissionStatus() async {
-    setState(() {
-      isLoading = true;
-    });
-    User _user;
-    try {
-      _user = await AppwriteService().account.get();
-      try {
-        Document score = await AppwriteService()
-            .database
-            .getDocument(collectionId: 'Scores', documentId: _user.$id);
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation1, animation2) {
-              return FadeScaleTransition(
-                animation: animation1,
-                child: SubmittedScreen(
-                  score: score.data['score'],
-                ),
-              );
-            },
-          ),
-        );
-      } catch (e) {
-        debugPrint(e.toString());
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   bool isLoading = false;
