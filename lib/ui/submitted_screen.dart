@@ -6,6 +6,8 @@ import 'package:quiz/ui/button.dart';
 import 'package:rive/rive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../services/quiz_cubit.dart';
+
 class SubmittedScreen extends StatelessWidget {
   const SubmittedScreen({Key? key, required this.score}) : super(key: key);
 
@@ -44,6 +46,7 @@ class SubmittedScreen extends StatelessWidget {
             width: 200,
             child: AppButton(
                 onTap: () {
+                  QuizCubit().setScore = 0;
                   Navigator.of(context).pushReplacement(
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) {
