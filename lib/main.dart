@@ -1,13 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:quiz/services/appwrite.dart';
 import 'package:quiz/ui/button.dart';
 import 'package:quiz/ui/quiz_screen.dart';
-import 'package:quiz/ui/submitted_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
